@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int int main()
+int main()
 {
 	/* code */
+	printf("J'adore le génie logiciel <3");
 	return 0;
 }
