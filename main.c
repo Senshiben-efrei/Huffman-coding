@@ -3,6 +3,6 @@
 
 int int main()
 {
-	/* code */
+	/* modification test */
 	return 0;
 }
