@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1606077636 source:c:\users\cécilia\onedrive\documents\langage c\fichier test\functions.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"headers.h"
+
+1606077636 c:\users\cécilia\onedrive\documents\langage c\fichier test\headers.h
+	<string.h>
+
+1606077891 source:c:\users\cécilia\onedrive\documents\langage c\fichier test\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"headers.h"
+
