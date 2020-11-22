@@ -1,8 +1,12 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include "Header.h"
 
-int int main()
+int main()
 {
-	/* code */
-	return 0;
+    FILE *ftpr;
+    char Translation[10000];
+    BinaryTranslator(&ftpr, Translation);
+    afficher_caracteres(&ftpr, Translation);
+    return 0;
 }
