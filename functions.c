@@ -36,7 +36,7 @@ int afficher_caracteres (char *nomFichier) {
  else {
    // parcours du fichier
    while(fgetc(file) != EOF)
-    compteur ++;  // incrémentation du compteur
+    compteur ++;  // incrÃ©mentation du compteur
  }
 
  printf("Le nombre de caracteres du fichier est de : %d\n", compteur);
@@ -49,7 +49,7 @@ int afficher_caracteres (char *nomFichier) {
 
 
 // C : fonction qui renvoie une liste contenant chaque caractere present dans le texte,
-//     ainsi que le nombre d’occurrences de ce caractere.
+//     ainsi que le nombre dâ€™occurrences de ce caractere.
 
 int check_letter(Element* list, char letter){
     int here = -1 , compt = 0;   //if here return the position, else -1
@@ -99,6 +99,6 @@ Element* occurrence (char* text){       // To pass an entire array to a function
 }
 
 // G : fonction qui compresse un fichier texte.
-//     Le fichier d’entree ne sera pas modifie, un autre fichier, contenant le texte compresse sera cree.
+//     Le fichier dâ€™entree ne sera pas modifie, un autre fichier, contenant le texte compresse sera cree.
 
 
