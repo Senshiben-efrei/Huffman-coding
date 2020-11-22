@@ -4,8 +4,9 @@
 
 
 typedef struct Element{
-    int data; //Noeud
+    char letter; //Lettre
     struct Element *next; //Pointeur vers l'élément suivant
+    int occ; //Nombre d'occurrence
 } Element;
 
 typedef Element* List;
