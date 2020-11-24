@@ -10,4 +10,9 @@ int main()
   int taille = sizeof(letters) / sizeof(letters[0]);
 
   tree(letters, freq, taille);
+  int code[10000];
+  int i = 0;
+  struct Node* root = tree(letters, freq, taille); 
+  printCodes(root, code, i);
+
 }

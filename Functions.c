@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -128,4 +125,35 @@ struct Node *tree(char letter[], int freq[], int taille) {
   return minimum(pile);
 }
 
+void printArr(int code[], int j) 
+{ 
+  int i; 
+  for (i = 0; i < j; ++i) 
+    printf("%d", code[i]); 
 
+  printf("\n"); 
+} 
+
+
+void printCodes(struct Node* root, int code[], int i) 
+
+{ 
+
+  if (root->left) { 
+
+    code[i] = 0; 
+    printCodes(root->left, code, i + 1); 
+  } 
+
+  if (root->right) { 
+
+    code[i] = 1; 
+    printCodes(root->right, code, i + 1); 
+  } 
+
+  if (feuille(root)) { 
+
+    printf("%c: ", root->letter); 
+    printArr(code, i); 
+  } 
+} 
