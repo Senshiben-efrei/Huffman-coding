@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 struct Node {
   char letter;
   unsigned freq;
@@ -134,9 +135,22 @@ void printArr(int code[], int j)
   printf("\n"); 
 } 
 
+void writeArr(int code[], int j) 
+{ 
+  int i; 
+  FILE *fptr;
+  fptr = fopen("program.txt", "a");
 
-void printCodes(struct Node* root, int code[], int i) 
+  for (i = 0; i < j; ++i) 
+    fprintf(fptr, "%d", code[i]);
+    fprintf(fptr,"\n"); 
 
+  fclose(fptr);
+
+} 
+
+
+void printCodes(struct Node* root, int code[], int i)
 { 
 
   if (root->left) { 
@@ -155,5 +169,6 @@ void printCodes(struct Node* root, int code[], int i)
 
     printf("%c: ", root->letter); 
     printArr(code, i); 
+    writeArr(code, i); 
   } 
 } 

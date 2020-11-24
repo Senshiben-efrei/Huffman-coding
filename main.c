@@ -2,9 +2,13 @@
 #include <stdio.h>
 
 #include "Header.h"
+#define LEN 256
 
 int main() 
 {
+
+  
+
   char letters[] = {'A', 'B', 'C', 'D', ' ', 'f', 'n'};
   int freq[] = {5, 1, 6, 7, 1, 6, 7};
   int taille = sizeof(letters) / sizeof(letters[0]);
@@ -14,5 +18,4 @@ int main()
   int i = 0;
   struct Node* root = tree(letters, freq, taille); 
   printCodes(root, code, i);
-
 }
