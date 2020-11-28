@@ -2,6 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct Element{
+    char letter; //Lettre
+    struct Element *next; //Pointeur vers l'élément suivant
+    int occ; //Nombre d'occurrence
+} Element;
 
 struct Node {
   char letter;
@@ -139,7 +144,7 @@ void writeArr(int code[], int j)
 { 
   int i; 
   FILE *fptr;
-  fptr = fopen("program.txt", "a");
+  fptr = fopen("dico.txt", "a");
 
   for (i = 0; i < j; ++i) 
     fprintf(fptr, "%d", code[i]);
@@ -169,6 +174,52 @@ void printCodes(struct Node* root, int code[], int i)
 
     printf("%c: ", root->letter); 
     printArr(code, i); 
+
+    FILE *fptr;
+    fptr = fopen("dico.txt", "a");
+    fprintf(fptr,"%c: ", root->letter); 
+    fclose(fptr);
+
     writeArr(code, i); 
   } 
 } 
+
+Element* new_letter(char letter,int occ)
+{
+    Element* new = malloc(sizeof(Element));
+    new->next = NULL;
+    new->letter = letter;
+    new->occ = occ;
+    return new;
+}
+
+
+void dictionairify(Element* list_occ)
+{
+  char letters[300];
+  int freq[300];
+  int liste_to_charnint(Element* maListe)
+  {
+    Element* temp;
+    temp = maListe;
+    int i =0;
+    while (temp != NULL)
+    {
+      letters[i]=temp->letter;
+      freq[i]=temp->occ;
+      temp = temp->next;
+      i++;
+    }
+    return i;
+  }
+  int taille = liste_to_charnint(list_occ);
+  //printf("%d\n", taille);
+  tree(letters, freq, taille);
+  int code[10000];
+  int i = 0;
+  struct Node* root = tree(letters, freq, taille); 
+
+  fclose(fopen("dico.txt", "w"));
+
+  printCodes(root, code, i);
+}
