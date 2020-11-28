@@ -28,8 +28,9 @@ void buildpile(struct pile *pile);
 int feuille(struct Node *root);
 struct pile *createAndBuildpile(char letter[], int freq[], int taille);
 struct Node *tree(char letter[], int freq[], int taille);
-void printArr(int code[], int j, FILE **ftpr, struct Node* root);
-void printCodes(struct Node* root, int code[], int i, FILE **ftpr);
-void crea_liste ();
+void printArr(int code[], int j);
+void writeArr(int code[], int j);
+void printCodes(struct Node* root, int code[], int i);
+void crea_liste();
 
 #endif // HEADER_H_INCLUDED

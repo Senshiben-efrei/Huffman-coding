@@ -6,7 +6,7 @@ void BinaryTranslator(FILE** ftpr, char *Translation)
 {
     char Traduction[10000];
     char Temp[9];
-    //It will make  sure the fptr gets read first,
+    //It will make sure the fptr gets read first,
     if ((*ftpr = fopen("Texte.txt", "r")) == NULL)
     {
         printf("Erreur, le fichier n'est pas disponible.");
@@ -61,155 +61,199 @@ void afficher_caracteres(FILE** ftpr, char *Translation)
 /* Afficher_caracteres will count the characters from the provided from the Texte.txt
  */
 
-struct Node *newNode(char letter, unsigned freq) {
-  struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+struct Node *newNode(char letter, unsigned freq)
+{
+    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
 
-  temp->left = temp->right = NULL;
-  temp->letter = letter;
-  temp->freq = freq;
+    temp->left = temp->right = NULL;
+    temp->letter = letter;
+    temp->freq = freq;
 
-  return temp;
+    return temp;
 }
 
-struct pile *cree_pile(unsigned capacity) {
-  struct pile *pile = (struct pile *)malloc(sizeof(struct pile));
+struct pile *cree_pile(unsigned capacity)
+{
+    struct pile *pile = (struct pile *)malloc(sizeof(struct pile));
 
-  pile->taille = 0;
+    pile->taille = 0;
 
-  pile->capacity = capacity;
+    pile->capacity = capacity;
 
-  pile->liste = (struct Node **)malloc(pile->capacity * sizeof(struct Node *));
-  return pile;
+    pile->liste = (struct Node **)malloc(pile->capacity * sizeof(struct Node *));
+    return pile;
 }
 
-void swapNode(struct Node **a, struct Node **b) {
-  struct Node *t = *a;
-  *a = *b;
-  *b = t;
+void swapNode(struct Node **a, struct Node **b)
+{
+    struct Node *t = *a;
+    *a = *b;
+    *b = t;
 }
 
-void empiler(struct pile *pile, int idx) {
-  int smallest = idx;
-  int left = 2 * idx + 1;
-  int right = 2 * idx + 2;
+void empiler(struct pile *pile, int idx)
+{
+    int smallest = idx;
+    int left = 2 * idx + 1;
+    int right = 2 * idx + 2;
 
-  if (left < pile->taille && pile->liste[left]->freq < pile->liste[smallest]->freq)
-    smallest = left;
+    if (left < pile->taille && pile->liste[left]->freq < pile->liste[smallest]->freq)
+        smallest = left;
 
-  if (right < pile->taille && pile->liste[right]->freq < pile->liste[smallest]->freq)
-    smallest = right;
+    if (right < pile->taille && pile->liste[right]->freq < pile->liste[smallest]->freq)
+        smallest = right;
 
-  if (smallest != idx) {
-    swapNode(&pile->liste[smallest], &pile->liste[idx]);
-    empiler(pile, smallest);
-  }
-}
-
-int last(struct pile *pile) {
-  return (pile->taille == 1);
-}
-
-struct Node *minimum(struct pile *pile) {
-  struct Node *temp = pile->liste[0];
-  pile->liste[0] = pile->liste[pile->taille - 1];
-
-  --pile->taille;
-  empiler(pile, 0);
-
-  return temp;
-}
-
-void insertpile(struct pile *pile, struct Node *pileNode) {
-  ++pile->taille;
-  int i = pile->taille - 1;
-
-  while (i && pileNode->freq < pile->liste[(i - 1) / 2]->freq) {
-    pile->liste[i] = pile->liste[(i - 1) / 2];
-    i = (i - 1) / 2;
-  }
-  pile->liste[i] = pileNode;
-}
-
-void buildpile(struct pile *pile) {
-  int n = pile->taille - 1;
-  int i;
-
-  for (i = (n - 1) / 2; i >= 0; --i)
-    empiler(pile, i);
-}
-
-int feuille(struct Node *root) {
-  return !(root->left) && !(root->right);
-}
-
-struct pile *createAndBuildpile(char letter[], int freq[], int taille) {
-  struct pile *pile = cree_pile(taille);
-
-  for (int i = 0; i < taille; ++i)
-    pile->liste[i] = newNode(letter[i], freq[i]);
-
-  pile->taille = taille;
-  buildpile(pile);
-
-  return pile;
-}
-
-struct Node *tree(char letter[], int freq[], int taille) {
-  struct Node *left, *right, *top;
-  struct pile *pile = createAndBuildpile(letter, freq, taille);
-
-  while (!last(pile)) {
-    left = minimum(pile);
-    right = minimum(pile);
-
-    top = newNode('$', left->freq + right->freq);
-
-    top->left = left;
-    top->right = right;
-
-    insertpile(pile, top);
-  }
-  return minimum(pile);
-}
-
-void printArr(int code[], int j, FILE **ftpr, struct Node* root) {
-    int i;
-    char Temp[1000];
-    for (i = 0; i < j; i++)
+    if (smallest != idx)
     {
-        Temp[i] = '0' + code[i];
-        printf("i:%d \n", i);
-        printf("Code:%d \n", code[i]);
-        printf("Temp:%c \n", Temp[i]);
+        swapNode(&pile->liste[smallest], &pile->liste[idx]);
+        empiler(pile, smallest);
     }
-    Temp[i] = '\0';
-    printf("Voici le résultat final: %s\n", Temp);
-    *ftpr = fopen("Dictionnary.txt", "a");
-    fprintf(*ftpr, "%c ", root->letter);
-    fprintf(*ftpr, Temp);
-    fprintf(*ftpr, "\n");
-    fclose(*ftpr);
 }
 
-void printCodes(struct Node* root, int code[], int i, FILE **ftpr) {
+int last(struct pile *pile)
+{
+    return (pile->taille == 1);
+}
 
-    if (root->left) {
+struct Node *minimum(struct pile *pile)
+{
+    struct Node *temp = pile->liste[0];
+    pile->liste[0] = pile->liste[pile->taille - 1];
+
+    --pile->taille;
+    empiler(pile, 0);
+
+    return temp;
+}
+
+void insertpile(struct pile *pile, struct Node *pileNode)
+{
+    ++pile->taille;
+    int i = pile->taille - 1;
+
+    while (i && pileNode->freq < pile->liste[(i - 1) / 2]->freq)
+    {
+        pile->liste[i] = pile->liste[(i - 1) / 2];
+        i = (i - 1) / 2;
+    }
+    pile->liste[i] = pileNode;
+}
+
+void buildpile(struct pile *pile)
+{
+    int n = pile->taille - 1;
+    int i;
+
+    for (i = (n - 1) / 2; i >= 0; --i)
+        empiler(pile, i);
+}
+
+int feuille(struct Node *root)
+{
+    return !(root->left) && !(root->right);
+}
+
+struct pile *createAndBuildpile(char letter[], int freq[], int taille)
+{
+    struct pile *pile = cree_pile(taille);
+
+    for (int i = 0; i < taille; ++i)
+        pile->liste[i] = newNode(letter[i], freq[i]);
+
+    pile->taille = taille;
+    buildpile(pile);
+
+    return pile;
+}
+
+struct Node *tree(char letter[], int freq[], int taille)
+{
+    struct Node *left, *right, *top;
+    struct pile *pile = createAndBuildpile(letter, freq, taille);
+
+    while (!last(pile))
+    {
+        left = minimum(pile);
+        right = minimum(pile);
+
+        top = newNode('$', left->freq + right->freq);
+
+        top->left = left;
+        top->right = right;
+
+        insertpile(pile, top);
+    }
+    return minimum(pile);
+}
+
+void printArr(int code[], int j)
+{
+    int i;
+    for (i = 0; i < j; ++i)
+        printf("%d", code[i]);
+
+    printf("\n");
+}
+
+void writeArr(int code[], int j)
+{
+    int i;
+    FILE *fptr;
+    fptr = fopen("dictionary.txt", "a");
+
+    for (i = 0; i < j; ++i)
+    {
+        fprintf(fptr, "%d", code[i]); //This line takes the binary code written in code[], build along the passages in the recursive function from where it came from.
+    }
+    fprintf(fptr,"\n");
+    fclose(fptr);
+
+}
+/* This function comes directly from PrintCodes, a recursive function which builds code[].
+ * Code[] is then unveiled and unraveled in a loop, which is then printed into the Dictionary file.
+ * Formatting is realized by putting the letter, then a space and finally, the code.
+ */
+
+
+void printCodes(struct Node* root, int code[], int i)
+{
+
+    if (root->left)
+    {
+
         code[i] = 0;
-        printCodes(root->left, code, i + 1, &ftpr);
+        printCodes(root->left, code, i + 1); //This line and the one above add a '0' when the program takes the left branch of the tree.
     }
 
-    if (root->right) {
+    if (root->right)
+    {
+
         code[i] = 1;
-        printCodes(root->right, code, i + 1, &ftpr);
+        printCodes(root->right, code, i + 1); //This line and the one above add a '1' when the program takes the left branch of the tree.
     }
 
-    if (feuille(root)) {
+    if (feuille(root))
+    {
+
         printf("%c: ", root->letter);
-        printArr(code, i, &ftpr, root);
+        printArr(code, i);
+
+        FILE *fptr;
+        fptr = fopen("dictionary.txt", "a");
+        fprintf(fptr,"%c: ", root->letter); //This line is used to print the corresponding letter to the binary code unveiled.
+        fclose(fptr);
+        writeArr(code, i); //Thanks to the code build along the recursive path, the code will always match the way took to reach the corresponding letter.
     }
 }
 
-void crea_liste ()
+/* PrintCodes is a recursive function that will build code[] and store the path taken inside it.
+ * If the program takes a turn to the right, a '1' will be added.
+ * If the program takes a turn to the left, a '0' will be added.
+ * Once a letter has been reached, it will get added into the Dictionary, and code[] will be sent in writeArr to get unraveled and printed onto the Dictionary.
+ */
+
+
+void crea_liste()
 {
     FILE* fichier = NULL;
     FILE* fptr = NULL;
@@ -217,32 +261,32 @@ void crea_liste ()
     char code[8] = "";
     char CopieTexte[1000] = "";
     char Buffer[1000] = "";
-    fichier = fopen("Dictionnary.txt", "r");
+    fichier = fopen("dictionary.txt", "r");
     fptr = fopen("SuiteBinaire.txt", "w");
     Texte = fopen("Texte.txt", "r");
-    while (fgets(CopieTexte, 1000, Texte) != NULL)
+    while (fgets(CopieTexte, 1000, Texte) != NULL) //This line will make sure the entire Text file gets read, including \n.
     {
-        fscanf(Texte, "%[^\n]", CopieTexte);
+        fscanf(Texte, "%[^\n]", CopieTexte); //This line will copy the current string to a CHAR, making it easier for the program to read.
         for (int j = 0; j <= strlen(CopieTexte); j++)
         {
             printf("J = %d\n", j);
             printf("current letter : %c\n", CopieTexte[j]);
-            fseek(fichier, 0, SEEK_SET);
-            while (fgets(Buffer, 1000, fichier) != NULL)
+            fseek(fichier, 0, SEEK_SET); //This line makes sure the pointer to the dictionary file gets reset to the start of the file.
+            while (fgets(Buffer, 1000, fichier) != NULL) //This line will make sure the entire dictionary file gets read, including \n.
             {
                 printf("%s\n", Buffer);
-                fscanf(fichier, "%c", &code[0]);
+                fscanf(fichier, "%c", &code[0]); //This line stores the first character of the dictionary, allowing to look for similarities in the Text file.
                 printf("Code = %c\n", code[0]);
-                if (code[0] == CopieTexte[j])
+                if (code[0] == CopieTexte[j]) //Here, we will see if the character on the dictionary file matches the current letter in the Text file.
                 {
                     printf("Inside If loop\n");
-                    fscanf(fichier, "%[^\n]", &code);
+                    fscanf(fichier, "%[^\n]", &code); //Let us copy the entire dictionary string.
                     printf("memmove\n");
-                    memmove(code, code+1, strlen(code));
+                    memmove(code, code+1, strlen(code)); //Then, move the pointer two strings on the right, making sure we only copy the code and not the letters.
                     printf("prints\n");
                     fprintf(fptr, "%s", code);
                     fprintf(fptr, "\n");
-                    free(code);
+                    free(code); //This line and the following resets the code variable, to reset the pointer who was now making code having only 6 spaces.
                     char code[8] = "";
                 }
             }
@@ -252,3 +296,7 @@ void crea_liste ()
     fclose(fptr);
     fclose(Texte);
 }
+
+/* crea_liste opens the main Text file, and translates it into another binary file.
+ * This binary file will be build according to the dictionary previously created thanks to the Huffman Tree created before.
+ */
