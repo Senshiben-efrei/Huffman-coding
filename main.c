@@ -18,7 +18,9 @@ int main()
     int i = 0;
     struct Node* root = tree(letters, freq, taille);
     ftpr = fopen("Dictionnary.txt", "w");
+    fprintf(ftpr, "\n");
     fclose(ftpr);
     printCodes(root, code, i, &ftpr);
+    crea_liste();
     return 0;
 }

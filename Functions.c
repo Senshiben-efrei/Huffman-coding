@@ -172,7 +172,7 @@ struct Node *tree(char letter[], int freq[], int taille) {
   return minimum(pile);
 }
 
-void printArr(int code[], int j, FILE **ftpr) {
+void printArr(int code[], int j, FILE **ftpr, struct Node* root) {
     int i;
     char Temp[1000];
     for (i = 0; i < j; i++)
@@ -183,10 +183,11 @@ void printArr(int code[], int j, FILE **ftpr) {
         printf("Temp:%c \n", Temp[i]);
     }
     Temp[i] = '\0';
-    printf("Voici le résultat final: %s", Temp);
+    printf("Voici le résultat final: %s\n", Temp);
     *ftpr = fopen("Dictionnary.txt", "a");
+    fprintf(*ftpr, "%c ", root->letter);
     fprintf(*ftpr, Temp);
-    fprintf(*ftpr, " ");
+    fprintf(*ftpr, "\n");
     fclose(*ftpr);
 }
 
@@ -204,6 +205,50 @@ void printCodes(struct Node* root, int code[], int i, FILE **ftpr) {
 
     if (feuille(root)) {
         printf("%c: ", root->letter);
-        printArr(code, i, &ftpr);
+        printArr(code, i, &ftpr, root);
     }
+}
+
+void crea_liste ()
+{
+    FILE* fichier = NULL;
+    FILE* fptr = NULL;
+    FILE* Texte = NULL;
+    char code[8] = "";
+    char CopieTexte[1000] = "";
+    char Buffer[1000] = "";
+    fichier = fopen("Dictionnary.txt", "r");
+    fptr = fopen("SuiteBinaire.txt", "w");
+    Texte = fopen("Texte.txt", "r");
+    while (fgets(CopieTexte, 1000, Texte) != NULL)
+    {
+        fscanf(Texte, "%[^\n]", CopieTexte);
+        for (int j = 0; j <= strlen(CopieTexte); j++)
+        {
+            printf("J = %d\n", j);
+            printf("current letter : %c\n", CopieTexte[j]);
+            fseek(fichier, 0, SEEK_SET);
+            while (fgets(Buffer, 1000, fichier) != NULL)
+            {
+                printf("%s\n", Buffer);
+                fscanf(fichier, "%c", &code[0]);
+                printf("Code = %c\n", code[0]);
+                if (code[0] == CopieTexte[j])
+                {
+                    printf("Inside If loop\n");
+                    fscanf(fichier, "%[^\n]", &code);
+                    printf("memmove\n");
+                    memmove(code, code+1, strlen(code));
+                    printf("prints\n");
+                    fprintf(fptr, "%s", code);
+                    fprintf(fptr, "\n");
+                    free(code);
+                    char code[8] = "";
+                }
+            }
+        }
+    }
+    fclose(fichier);
+    fclose(fptr);
+    fclose(Texte);
 }
