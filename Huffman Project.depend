@@ -14,3 +14,18 @@
 	<string.h>
 	"headers.h"
 
+1606934608 source:c:\users\cécilia\documents\github\huffman-coding\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"headers.h"
+
+1606935085 c:\users\cécilia\documents\github\huffman-coding\headers.h
+	<string.h>
+
+1606935176 source:c:\users\cécilia\documents\github\huffman-coding\functions.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"headers.h"
+
