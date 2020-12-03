@@ -3,25 +3,21 @@
 
 #include <string.h>
 
+typedef struct Node
+{
+    char letter;
+    int size;
+    struct Node *left, *right;
+} Node;
+
 typedef struct Element
 {
     char letter; //Lettre
     struct Element *next; //Pointeur vers l'élément suivant
-    unsigned occ; //Nombre d'occurrence
+    int occ; //Nombre d'occurrence
+    Node* node;
 } Element;
 
-typedef struct Node
-{
-    char letter;
-    unsigned occ;
-    struct Node *left, *right;
-} Node;
-
-typedef struct List_Node
-{
-    Node** tab;
-    int size_tab;
-} List_Node;
 
 
 void afficherListe(Element *list);
@@ -32,16 +28,20 @@ int check_letter(Element* list, char letter);
 Element* new_letter(char letter);
 Element* occurrence (char* text);
 
-int get_length(Element* root);
+void insert_node_element(Element* root, Element* to_insert);
+Node* Huffman_Tree(Element* list);
+void print2DUtil(struct Node *root, int space);
+void print2D(struct Node *root);
+
 Element* get_element(Element* root, int index);
+int	list_size(Element* root);
+Element* add_by_dichotomie_v2 (char* my_file);
+void print_occurences(Element* root);
+void swap(Element* a, Element* b);
 
-List_Node* add_by_dichotomie_v2 (char* my_file);
-void print_Tab_of_DoubleNode (List_Node* list);
-void swap(Node* a, Node* b);
 
-int	list_size(Node** lst);
-void quick_sorting (List_Node* list, int first, int last);
-void quick_sorting_caller(List_Node* list);
+void quick_sorting (Element* root, int first, int last);
+void quick_sorting_caller(Element* root);
 
 
 #endif // HEADERS_H_INCLUDED
