@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1607465802 source:c:\users\cécilia\onedrive\documents\langage c\projet huffman 1\main.c
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	<string.h>
+	"headers.h"
+
+1607465659 c:\users\cécilia\onedrive\documents\langage c\projet huffman 1\hearders.h
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	<string.h>
+
+1607467182 source:c:\users\cécilia\onedrive\documents\langage c\projet huffman 1\functions.c
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	<string.h>
+	"headers.h"
+
+1607466868 c:\users\cécilia\onedrive\documents\langage c\projet huffman 1\headers.h
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	<string.h>
+
